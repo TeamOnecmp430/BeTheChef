@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BTheChef</string>
+    <string name="hello_first_fragment"><b>Your ingredients:</b></string>
+    <string name="enterIngredHint"><font size="17">Enter ingredients, separated by commas</font></string>
+</resources>
