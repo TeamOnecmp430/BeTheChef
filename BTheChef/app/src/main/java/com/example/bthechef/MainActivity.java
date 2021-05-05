@@ -10,11 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.sql.Ref;
 
@@ -24,57 +29,28 @@ public class MainActivity extends AppCompatActivity {
     private Button addIngredientBtn;
     TextView listOfIngredients;
     private String[] allIngredients;
+    Button testDbBtn;
+    TextView showDb;
 
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
-
-
-
-         myRef.setValue("Hello, World!");
-
-
-         myRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            String value = dataSnapshot.getValue(String.class);
-            Log.d(TAG, "Value is: " + value);
-        }
-
-        @Override
-        public void onCancelled(DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-        }
-    });
+    // firebase implementation.
+    DatabaseReference myDataRef = FirebaseDatabase.getInstance().getReference();
+    //testing db
+    DatabaseReference mConditionRef = myDataRef.child("tacos");
 
 
 
-
-
-    /*// Read from the database
-    myRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            String value = dataSnapshot.getValue(String.class);
-            Log.d(TAG, "Value is: " + value);
-        }
-        @Override
-        public void onCancelled(DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-        }
-    });
-*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //assigning to test database
+        showDb = (TextView) findViewById(R.id.viewDb);
+        testDbBtn = (Button)findViewById(R.id.buttonTestDb);
+
 
         listOfIngredients = findViewById(R.id.listOfIngredsTView);
         editText = findViewById(R.id.ingredEditText);
@@ -98,8 +74,30 @@ public class MainActivity extends AppCompatActivity {
                 allIngredients = userInput.split(delimiter);
                 listOfIngredients.setText("Your ingredients:" + getAllIngredients(allIngredients));
             }
+
+
         });
         //addIngredientBtn = findViewById(R.id.addIngredBtn);
+    }
+
+
+    //call function for the database.
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mConditionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                showDb.setText(text);
+            }
+
+            @Override
+            public void onCancelled( DatabaseError error) {
+
+            }
+        });
+
     }
 
     public String getAllIngredients(String[] array) {

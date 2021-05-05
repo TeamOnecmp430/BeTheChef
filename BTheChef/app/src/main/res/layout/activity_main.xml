@@ -36,6 +36,7 @@
                 android:text="Your Ingredients:"
                 android:textStyle="bold" />
         </LinearLayout>
+
     </ScrollView>
 
 
@@ -48,5 +49,20 @@
         android:fontFamily="casual"
         android:text="Search food"
         android:visibility="visible" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_first"
+        android:id="@+id/buttonTestDb"
+        android:text="database"
+        />
+    <TextureView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewDb"
+        android:layout_below="@id/buttonTestDb"
+        android:fontFamily="casual"
+        android:textStyle="bold"
+        />
 
 </RelativeLayout>
