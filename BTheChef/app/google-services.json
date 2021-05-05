@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "798009460759",
+    "project_id": "bethechef-df9f8",
+    "storage_bucket": "bethechef-df9f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798009460759:android:f572bbdc7ebdf588153452",
+        "android_client_info": {
+          "package_name": "com.example.bthechef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798009460759-l17mse33ecj9d47ccaks93p5s36hlcr8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe7qiBtL_OPCymPFsT4rPLMngh6yr0F6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798009460759-l17mse33ecj9d47ccaks93p5s36hlcr8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,5 @@
 package com.example.bthechef;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.sql.Ref;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
@@ -19,6 +24,52 @@ public class MainActivity extends AppCompatActivity {
     private Button addIngredientBtn;
     TextView listOfIngredients;
     private String[] allIngredients;
+
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("message");
+
+
+
+         myRef.setValue("Hello, World!");
+
+
+         myRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            // This method is called once with the initial value and again
+            // whenever data at this location is updated.
+            String value = dataSnapshot.getValue(String.class);
+            Log.d(TAG, "Value is: " + value);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+        }
+    });
+
+
+
+
+
+    /*// Read from the database
+    myRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            // This method is called once with the initial value and again
+            // whenever data at this location is updated.
+            String value = dataSnapshot.getValue(String.class);
+            Log.d(TAG, "Value is: " + value);
+        }
+        @Override
+        public void onCancelled(DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+        }
+    });
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
         //addIngredientBtn = findViewById(R.id.addIngredBtn);
     }
 
-    public String getAllIngredients(String[] array){
+    public String getAllIngredients(String[] array) {
         String temp = "";
-        for (int i = 0; i < array.length; ++i){
+        for (int i = 0; i < array.length; ++i) {
             temp += "\n- " + array[i];
         }
         return temp;
@@ -67,3 +118,4 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "end of addIngredToList");
     }
 }
+
