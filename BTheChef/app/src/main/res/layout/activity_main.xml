@@ -39,13 +39,14 @@
 
 
     <Button
-        android:id="@+id/button_first"
+        android:id="@+id/searchFood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scrollView"
         android:layout_alignParentBottom="false"
         android:fontFamily="casual"
         android:text="Search food"
+        android:onClick="searchFood"
         android:visibility="visible" />
 
 </RelativeLayout>

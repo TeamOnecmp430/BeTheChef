@@ -2,6 +2,8 @@ package com.example.bthechef;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addIngredientBtn;
     TextView listOfIngredients;
     private String[] allIngredients;
+    String delimiter = "[,][, ]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 allIngredients = null;
                 String userInput = editText.getText().toString();
-                // String currentList = listOfIngredients.getText().toString();
-                String delimiter = "[,][, ]";
                 allIngredients = userInput.split(delimiter);
                 listOfIngredients.setText("Your ingredients:" + getAllIngredients(allIngredients));
             }
@@ -59,11 +60,20 @@ public class MainActivity extends AppCompatActivity {
         return temp;
     }
 
-    public void addIngredToList(View view) {
-        Log.d(TAG, "inside addIngredToList");
+    public void searchFood(View view) {
+        Log.d(TAG, "inside searchFood");
         String userInput = editText.getText().toString();
-        String currentList = listOfIngredients.getText().toString();
-        listOfIngredients.setText(currentList + "\n- " + userInput);
-        Log.d(TAG, "end of addIngredToList");
+        String searchQuery = "";
+        for (int i = 0; i < allIngredients.length; ++i){
+            searchQuery += allIngredients[i] + " ";
+        }
+
+        searchQuery += "recipes";
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, searchQuery);
+        if (searchQuery != ""){
+            startActivity(intent);
+        }
+        Log.d(TAG, "end of searchFood");
     }
 }
