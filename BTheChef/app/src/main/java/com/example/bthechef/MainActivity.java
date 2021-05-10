@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     private EditText editText;
-    private Button addIngredientBtn;
     TextView listOfIngredients;
     private String[] allIngredients;
+    // helps to remove the commas the user inserts
     String delimiter = "[,][, ]";
 
     @Override
@@ -43,16 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                // first, empty the array
                 allIngredients = null;
                 String userInput = editText.getText().toString();
                 allIngredients = userInput.split(delimiter);
-                listOfIngredients.setText("Your ingredients:" + getAllIngredients(allIngredients));
+                listOfIngredients.setText("Your ingredients:" + printAllIngredients(allIngredients));
             }
         });
-        //addIngredientBtn = findViewById(R.id.addIngredBtn);
     }
 
-    public String getAllIngredients(String[] array){
+    // returns a String containing the ingredients user enters
+    public String printAllIngredients(String[] array){
         String temp = "";
         for (int i = 0; i < array.length; ++i){
             temp += "\n- " + array[i];
@@ -60,14 +61,16 @@ public class MainActivity extends AppCompatActivity {
         return temp;
     }
 
+    // makes an Intent to search the web for the ingredients
+    // the user enters
     public void searchFood(View view) {
         Log.d(TAG, "inside searchFood");
-        String userInput = editText.getText().toString();
         String searchQuery = "";
+        // add every item in the allIngredients array to searchQuery
         for (int i = 0; i < allIngredients.length; ++i){
             searchQuery += allIngredients[i] + " ";
         }
-
+        // finally add the word 'recipes' to complete the search query
         searchQuery += "recipes";
         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
         intent.putExtra(SearchManager.QUERY, searchQuery);
