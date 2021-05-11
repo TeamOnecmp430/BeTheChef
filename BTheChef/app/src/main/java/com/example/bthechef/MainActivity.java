@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -23,11 +25,15 @@ public class MainActivity extends AppCompatActivity {
     // helps to remove the commas the user inserts
     String delimiter = "[,][, ]";
 
+    private Toolbar mtoolBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // call function for toolbar crashing the app.
+//        mtoolBar = findViewById(R.id.toolBar) ;
+//        setSupportActionBar(mtoolBar);
         listOfIngredients = findViewById(R.id.listOfIngredsTView);
         editText = findViewById(R.id.ingredEditText);
         editText.addTextChangedListener(new TextWatcher() {
@@ -49,7 +55,13 @@ public class MainActivity extends AppCompatActivity {
                 allIngredients = userInput.split(delimiter);
                 listOfIngredients.setText("Your ingredients:" + printAllIngredients(allIngredients));
             }
+
         });
+    }
+
+    private void setSupportActionBar(Toolbar toolBar) {
+
+
     }
 
     // returns a String containing the ingredients user enters
