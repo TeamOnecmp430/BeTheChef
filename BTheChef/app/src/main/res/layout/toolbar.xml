@@ -9,4 +9,22 @@
     app:popupTheme="@style/Theme.AppCompat.DayNight"
     >
 
+    <Button
+        android:id="@+id/aboutAppBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About BTheChef"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        />
+
+    <Button
+        android:id="@+id/shareIngredBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="SHARE"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"/>
+
 </androidx.appcompat.widget.Toolbar>

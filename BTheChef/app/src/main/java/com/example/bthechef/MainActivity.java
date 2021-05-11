@@ -1,6 +1,8 @@
 package com.example.bthechef;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] allIngredients;
     // helps to remove the commas the user inserts
     String delimiter = "[,][, ]";
+
 
     private Toolbar mtoolBar;
 
@@ -56,6 +60,31 @@ public class MainActivity extends AppCompatActivity {
                 listOfIngredients.setText("Your ingredients:" + printAllIngredients(allIngredients));
             }
 
+        });
+
+        Button aboutAppButton = findViewById(R.id.aboutAppBtn);
+        aboutAppButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick function start");
+                //Toast.makeText(this, "Works!", Toast.LENGTH_SHORT);
+                showAboutUsPopUp();
+            }
+        });
+
+        Button shareIngredientsBtn = findViewById(R.id.shareIngredBtn);
+        shareIngredientsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Sharing ingredients btn pressed");
+                if (editText.getText().toString().matches("")){
+                    Log.d(TAG, "user has not entered any ingredients");
+                }
+                else{
+                    Log.d(TAG, editText.getText().toString());
+                    sendText();
+                }
+            }
         });
     }
 
@@ -90,5 +119,33 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         Log.d(TAG, "end of searchFood");
+    }
+
+    public void showAboutUsPopUp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("About BTheChef");
+        builder.setMessage("Ever wanted to cook something nice, but looked in your pantry only to find scant ingredients?\n\nYou can still cook fine meals thanks to \'BTheChef\'.\n\nBTheChef: Allowing you to...well it's in the title ;)\n\nBTheChef was developed by: Zaheen Shahriyar, Muzzafar Ahmed, Andrew Ohakam, and Elizabeth Bocs\n");
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void sendText(){
+        Log.d(TAG, "sendText started");
+        String textToSend = "From BTheChef:\nRecipes containing ";
+        String searchURL = "https://www.google.com/search?q=";
+        for (int i = 0; i < allIngredients.length; ++i){
+            textToSend += allIngredients[i] + " ";
+            searchURL += allIngredients[i] + "+";
+        }
+        searchURL += "recipes";
+        textToSend += ": " + searchURL;
+        String mimeType = "text/plain";
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle("Send a Text")
+                .setText(textToSend)
+                .startChooser();
+        Log.d(TAG, "sendText ended");
     }
 }
